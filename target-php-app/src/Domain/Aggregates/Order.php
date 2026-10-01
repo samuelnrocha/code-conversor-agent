@@ -112,29 +112,32 @@ final class Order
             return Money::zero($this->currency);
         }
 
-        $totalAmount = 0.0;
+        $totalCents = 0;
         foreach ($this->items as $item) {
-            $totalAmount += $item->calculateNetTotal()->amount;
+            if ($item->unitPrice->currency !== $this->currency) {
+                throw new LogicException('Order item currency does not match order currency.');
+            }
+            $totalCents += $item->calculateNetTotal()->cents;
         }
 
-        return new Money($totalAmount, $this->currency);
+        return new Money($totalCents / 100, $this->currency);
     }
 
     public function calculateTotalDiscount(): Money
     {
         $subtotal = $this->calculateGrossSubtotal();
-        $totalDiscountAmount = 0.0;
+        $totalDiscountCents = 0;
 
         foreach ($this->discounts as $strategy) {
             $discount = $strategy->applyDiscount($subtotal);
-            $totalDiscountAmount += $discount->amount;
+            $totalDiscountCents += $discount->cents;
         }
 
-        if ($totalDiscountAmount > $subtotal->amount) {
-            $totalDiscountAmount = $subtotal->amount;
+        if ($totalDiscountCents > $subtotal->cents) {
+            $totalDiscountCents = $subtotal->cents;
         }
 
-        return new Money($totalDiscountAmount, $subtotal->currency);
+        return new Money($totalDiscountCents / 100, $subtotal->currency);
     }
 
     public function calculateSubtotalAfterDiscounts(): Money

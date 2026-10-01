@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-// PSR-4 Autoloader fallback without composer
+// Composer is preferred; the fallback keeps the CLI usable without dependencies.
+if (is_file(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+}
 spl_autoload_register(function ($class) {
     $prefix = 'OrderBillingSystem\\';
     $baseDir = __DIR__ . '/../src/';
@@ -17,14 +20,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-// Require files with multiple declarations
-require_once __DIR__ . '/../src/Domain/Events/DomainEvents.php';
-require_once __DIR__ . '/../src/Domain/Strategies/DiscountStrategies.php';
-require_once __DIR__ . '/../src/Domain/Exceptions/DomainExceptions.php';
-require_once __DIR__ . '/../src/Domain/Services/Contracts.php';
-require_once __DIR__ . '/../src/Infrastructure/Implementations.php';
-require_once __DIR__ . '/../src/Infrastructure/Database/DatabaseConfig.php';
-require_once __DIR__ . '/../src/Infrastructure/Database/SafeDatabaseConnection.php';
 
 use OrderBillingSystem\Application\UseCases\AddItemCommand;
 use OrderBillingSystem\Application\UseCases\CreateOrderCommand;
@@ -56,14 +51,10 @@ if (file_exists($envFile)) {
 }
 
 // Camada de Segurança: Carregamento de credenciais do ambiente com mascaramento
-$dbConfig = new DatabaseConfig();
-echo sprintf(
-    "[SECURITY LAYER] Database config loaded: host=%s, db=%s, user=%s (pwd=%s)\n",
-    $dbConfig->host,
-    $dbConfig->database,
-    $dbConfig->user,
-    $dbConfig->__debugInfo()['password']
-);
+if (getenv('DB_HOST') !== false && getenv('DB_NAME') !== false && getenv('DB_USER') !== false) {
+    $dbConfig = new DatabaseConfig();
+    echo sprintf("[SECURITY LAYER] Database config loaded: host=%s, db=%s, user=%s (pwd=%s)\n", $dbConfig->host, $dbConfig->database, $dbConfig->user, $dbConfig->__debugInfo()['password']);
+}
 
 $repo = new InMemoryOrderRepository();
 $paymentGateway = new MockPaymentGateway();

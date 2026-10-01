@@ -20,7 +20,7 @@ final readonly class CreateOrderCommand
         public string $orderId,
         public string $customerId,
         public string $countryCode,
-        public float $taxRatePercentage,
+        public int|float|string $taxRatePercentage,
         public string $currency = 'BRL'
     ) {
     }
@@ -32,7 +32,7 @@ final readonly class AddItemCommand
         public string $orderId,
         public string $sku,
         public string $name,
-        public float $unitPrice,
+        public int|float|string $unitPrice,
         public int $quantity,
         public float $discountPercent = 0.0
     ) {
@@ -73,7 +73,7 @@ final class OrderProcessingService
             throw new LogicException("Order {$command->orderId} not found.");
         }
 
-        $unitPrice = new Money($command->unitPrice, $order->calculateGrossSubtotal()->currency);
+        $unitPrice = new Money($command->unitPrice, $order->currency);
         $item = new OrderItem($command->sku, $command->name, $unitPrice, $command->quantity, $command->discountPercent);
 
         $order->addItem($item);
@@ -109,6 +109,9 @@ final class OrderProcessingService
             throw new DomainException("Payment failed for order {$order->id}: {$result->errorMessage}");
         }
 
+        if ($result->transactionId === null || trim($result->transactionId) === '') {
+            throw new DomainException('Payment succeeded without a transaction ID.');
+        }
         $order->markAsPaid($result->transactionId);
         $this->repository->save($order);
         $this->notificationService->sendPaymentReceipt($order->customerId, $order->id, $total);

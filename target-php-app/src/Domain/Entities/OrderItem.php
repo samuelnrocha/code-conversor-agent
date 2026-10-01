@@ -45,8 +45,8 @@ final class OrderItem
             return Money::zero($this->unitPrice->currency);
         }
 
-        $discount = ($this->unitPrice->amount * $this->quantity) * ($this->discountPercent / 100.0);
-        return new Money($discount, $this->unitPrice->currency);
+        $discountCents = ($this->unitPrice->cents * $this->quantity * $this->discountPercent) / 100;
+        return new Money($discountCents / 100, $this->unitPrice->currency);
     }
 
     public function calculateNetTotal(): Money

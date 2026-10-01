@@ -11,47 +11,47 @@ final readonly class Money
 {
     public float $amount;
     public string $currency;
+    public int $cents;
 
-    public function __construct(float $amount, string $currency = 'BRL')
+    public function __construct(int|float|string $amount, string $currency = 'BRL')
     {
-        if ($amount < 0.0) {
-            throw new InvalidArgumentException('Amount cannot be negative.');
-        }
-
         if (trim($currency) === '') {
             throw new InvalidArgumentException('Currency code cannot be empty.');
         }
 
-        $this->amount = round($amount, 2);
+        $this->cents = self::toCents($amount);
+        $this->amount = $this->cents / 100;
         $this->currency = strtoupper(trim($currency));
     }
 
     public static function zero(string $currency = 'BRL'): self
     {
-        return new self(0.0, $currency);
+        return new self(0, $currency);
     }
 
     public function add(self $other): self
     {
         $this->ensureSameCurrency($other);
-        return new self($this->amount + $other->amount, $this->currency);
+        return new self(($this->cents + $other->cents) / 100, $this->currency);
     }
 
     public function subtract(self $other): self
     {
         $this->ensureSameCurrency($other);
-        if ($this->amount < $other->amount) {
+        if ($this->cents < $other->cents) {
             throw new LogicException('Resulting money cannot be negative.');
         }
-        return new self($this->amount - $other->amount, $this->currency);
+        return new self(($this->cents - $other->cents) / 100, $this->currency);
     }
 
-    public function multiply(float|int $multiplier): self
+    public function multiply(int|float|string $multiplier): self
     {
-        if ($multiplier < 0) {
+        $multiplierString = (string) $multiplier;
+        if ((float) $multiplierString < 0) {
             throw new InvalidArgumentException('Multiplier cannot be negative.');
         }
-        return new self($this->amount * $multiplier, $this->currency);
+        $product = $this->cents * (float) $multiplierString;
+        return new self($product / 100, $this->currency);
     }
 
     private function ensureSameCurrency(self $other): void
@@ -66,5 +66,21 @@ final readonly class Money
     public function __toString(): string
     {
         return sprintf('%s %s', $this->currency, number_format($this->amount, 2, '.', ','));
+    }
+
+    private static function toCents(int|float|string $amount): int
+    {
+        $value = is_float($amount) ? sprintf('%.10F', $amount) : (string) $amount;
+        $value = trim($value);
+        if (!preg_match('/^\+?(\d+)(?:\.(\d+))?$/', $value, $matches)) {
+            throw new InvalidArgumentException('Amount must be a non-negative decimal.');
+        }
+        $fraction = str_pad(substr($matches[2] ?? '', 0, 3), 3, '0');
+        $third = (int) $fraction[2];
+        $cents = ((int) $matches[1] * 100) + (int) substr($fraction, 0, 2);
+        if ($third >= 5) {
+            ++$cents;
+        }
+        return $cents;
     }
 }

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-// PSR-4 Autoloader
+if (is_file(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+}
 spl_autoload_register(function ($class) {
     $prefix = 'OrderBillingSystem\\';
     $baseDir = __DIR__ . '/../src/';
@@ -17,12 +19,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-require_once __DIR__ . '/../src/Domain/Events/DomainEvents.php';
-require_once __DIR__ . '/../src/Domain/Strategies/DiscountStrategies.php';
-require_once __DIR__ . '/../src/Domain/Exceptions/DomainExceptions.php';
-require_once __DIR__ . '/../src/Domain/Services/Contracts.php';
-require_once __DIR__ . '/../src/Infrastructure/Database/DatabaseConfig.php';
-require_once __DIR__ . '/../src/Infrastructure/Database/SafeDatabaseConnection.php';
 use OrderBillingSystem\Domain\Aggregates\Order;
 use OrderBillingSystem\Domain\Entities\OrderItem;
 use OrderBillingSystem\Domain\Enums\OrderStatus;

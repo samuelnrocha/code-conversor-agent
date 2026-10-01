@@ -1,12 +1,3 @@
-
-# Security: Secrets & Environment Credentials
 .env
-.env.local
-.env.*.local
-*.secret
-*.key
-*.pem
-# Keep the sanitized template trackable; never add populated environment files.
-!.env.example
-appsettings.Development.json
-appsettings.Production.json
+/vendor/
+/var/

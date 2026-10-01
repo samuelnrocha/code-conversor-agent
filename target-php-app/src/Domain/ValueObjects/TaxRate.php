@@ -11,24 +11,25 @@ final readonly class TaxRate
 {
     public string $countryCode;
     public float $ratePercentage;
+    private int $basisPoints;
 
-    public function __construct(string $countryCode, float $ratePercentage)
+    public function __construct(string $countryCode, int|float|string $ratePercentage)
     {
         if (trim($countryCode) === '') {
             throw new InvalidArgumentException('Country code is required.');
         }
 
-        if ($ratePercentage < 0.0 || $ratePercentage > 100.0) {
+        if ((float) $ratePercentage < 0.0 || (float) $ratePercentage > 100.0) {
             throw new OutOfRangeException('Tax rate must be between 0 and 100.');
         }
 
         $this->countryCode = strtoupper(trim($countryCode));
-        $this->ratePercentage = $ratePercentage;
+        $this->ratePercentage = (float) $ratePercentage;
+        $this->basisPoints = (int) round($this->ratePercentage * 100);
     }
 
     public function calculateTax(Money $subtotal): Money
     {
-        $taxAmount = $subtotal->amount * ($this->ratePercentage / 100.0);
-        return new Money($taxAmount, $subtotal->currency);
+        return new Money(($subtotal->cents * $this->basisPoints) / 10000 / 100, $subtotal->currency);
     }
 }
