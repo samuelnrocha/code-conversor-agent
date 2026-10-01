@@ -32,6 +32,7 @@ O ecossistema de documentação do **Code Conversor Agent** é desenhado em quat
 | **Referência de Segurança** | `docs/security.md` | SecOps e Desenvolvedores auditando as 5 camadas de proteção de dados e credenciais | `/docs/security.md` |
 | **Guia de Conversão & Paridade** | `docs/csharp-to-php-mapping.md` | Desenvolvedores C# e PHP acompanhando o mapeamento sintático e de tipos DDD | `/docs/csharp-to-php-mapping.md` |
 | **Critérios de Inviabilidade** | `DOCUMENTO_INVIABILIDADE_MIGRACAO.md` | Times de arquitetura avaliando se um projeto legado pode ou não ser migrado | `/DOCUMENTO_INVIABILIDADE_MIGRACAO.md` |
+| **Integração OpenCode & OpenRouter** | `docs/opencode-openrouter-integration.md` | Guia de execução dos subagentes no OpenCode com GPT-5.6 Luna e roteamento por preço | `/docs/opencode-openrouter-integration.md` |
 | **Relatório de Auditoria** | `target-php-app/SECURITY_AUDIT_REPORT.md` | Evidência automatizada de conformidade com OWASP | `/target-php-app/SECURITY_AUDIT_REPORT.md` |
 
 ---

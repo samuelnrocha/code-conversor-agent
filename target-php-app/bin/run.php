@@ -92,7 +92,7 @@ $service->confirmOrder('ORD-2026-001');
 echo sprintf("Confirmed order status: %s\n", $order->status->label());
 
 // 5. Pay order
-$service->processPayment(new ProcessOrderPaymentCommand('ORD-2026-001', 'valid_token_abc'));
+$service->processPayment(new ProcessOrderPaymentCommand('ORD-2026-001', str_repeat('t', 16)));
 echo sprintf("Final order status: %s (PaidAt: %s)\n", $order->status->label(), $order->paidAt?->format('Y-m-d H:i:s'));
 echo sprintf("Domain events raised: %d\n", count($order->getDomainEvents()));
 

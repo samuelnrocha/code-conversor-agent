@@ -25,18 +25,18 @@ final readonly class DatabaseConfig
         ?string $database = null,
         ?string $user = null,
         ?string $password = null,
-        int $port = 3306,
-        string $driver = 'mysql'
+        ?int $port = null,
+        ?string $driver = null
     ) {
-        $this->driver = $driver;
-        $this->host = $host ?? (getenv('DB_HOST') ?: '127.0.0.1');
-        $this->database = $database ?? (getenv('DB_NAME') ?: 'order_billing_db');
-        $this->user = $user ?? (getenv('DB_USER') ?: 'db_order_user');
+        $this->driver = $driver ?? (getenv('DB_DRIVER') ?: 'sqlsrv');
+        $this->host = $host ?? (getenv('DB_HOST') ?: '');
+        $this->database = $database ?? (getenv('DB_NAME') ?: '');
+        $this->user = $user ?? (getenv('DB_USER') ?: '');
         $this->password = $password ?? (getenv('DB_PASSWORD') ?: '');
-        $this->port = (int) ($port ?: (getenv('DB_PORT') ?: 3306));
+        $this->port = $port ?? (int) (getenv('DB_PORT') ?: 1433);
 
-        if (trim($this->host) === '' || trim($this->database) === '') {
-            throw new InvalidArgumentException('Database host and database name cannot be empty.');
+        if (trim($this->host) === '' || trim($this->database) === '' || trim($this->user) === '') {
+            throw new InvalidArgumentException('Database host, name and user must be configured via the environment.');
         }
     }
 

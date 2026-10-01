@@ -291,30 +291,59 @@ code-conversor-agent/
 │   ├── tests/                     # 10 testes unitários cobrindo domínio e segurança de banco
 │   └── composer.json              # Configuração PSR-4 e pacotes do ecossistema
 │
+├── .opencode/                     # [OPENCODE V2] Subagentes autônomos para OpenCode
+│   └── agents/
+│       ├── orchestrator.md        # Agente mestre de orquestração
+│       ├── compatibility-analyst.md # Subagente de compatibilidade C# / PHP
+│       ├── decision-gate.md       # Subagente de decisão e fail-safe
+│       ├── secret-vault-guard.md  # Subagente de varredura e cofre .env (0600)
+│       ├── architecture-mapper.md # Subagente de mapeamento PSR-4
+│       ├── php-migrator.md        # Subagente de transposição de código PHP 8.4
+│       ├── code-reviewer.md       # Subagente de linter sintático
+│       ├── security-auditor.md    # Subagente de auditoria OWASP
+│       └── test-verifier.md       # Subagente de validação de testes e paridade
+│
+├── opencode.jsonc                 # Configuração do OpenCode com OpenRouter (GPT-5.6 Luna)
+│
 └── docs/                          # [DOCUMENTAÇÃO] Arquitetura de informação completa
     ├── plan.md                    # Plano de documentação e mapeamento de jornadas (Docs Assist)
     ├── csharp-to-php-mapping.md   # Matriz comparativa de tipos e construtos de linguagem
-    └── security.md                # Detalhamento aprofundado das 5 camadas de segurança
+    ├── security.md                # Detalhamento aprofundado das 5 camadas de segurança
+    └── opencode-openrouter-integration.md # Guia de execução no OpenCode com OpenRouter
 ```
 
 ---
 
 ## 8. Guia Rápido de Reprodução Local (Step-by-Step)
 
-Todos os comandos abaixo são auto-contidos e prontos para cópia e execução em ambiente Linux/WSL:
+### Opção A: Executar via Pipeline Multi-Agente no OpenCode v2 (com OpenRouter & GPT-5.6 Luna)
 
-### Passo 1: Validar a aplicação .NET 8 original
+O OpenCode v2 orquestra os subagentes utilizando o modelo **`openai/gpt-5.6-luna`** e roteamento dinâmico pelo provedor mais barato via OpenRouter:
+
+```bash
+# 1. Definir a chave de API do OpenRouter
+export OPENROUTER_API_KEY="sk-or-v1-sua-chave-aqui"
+
+# 2. Executar o pipeline completo via script auxiliar
+./agent-converter/run_opencode_pipeline.sh
+
+# 3. Ou executar diretamente com a CLI do OpenCode
+opencode run --standalone --agent orchestrator "Inicie a migração completa do projeto"
+
+# 4. Ou acionar um subagente específico (ex: auditor de segurança)
+opencode run --standalone --agent security-auditor "Audite a aplicação gerada em target-php-app"
+```
+
+### Opção B: Executar via Orquestrador Python Local
+
 ```bash
 # Executar a suíte de testes xUnit de origem
 dotnet test source-dotnet-app/OrderBillingSystem.Tests/OrderBillingSystem.Tests.csproj
 
 # Rodar o console original em C#
 dotnet run --project source-dotnet-app/OrderBillingSystem.App
-```
 
-### Passo 2: Executar a migração assistida por agentes
-```bash
-# Executa todo o pipeline com varredura, cofre e auditoria
+# Executar todo o pipeline multi-agente
 python3 agent-converter/orchestrator.py
 ```
 

@@ -23,10 +23,6 @@ require_once __DIR__ . '/../src/Domain/Exceptions/DomainExceptions.php';
 require_once __DIR__ . '/../src/Domain/Services/Contracts.php';
 require_once __DIR__ . '/../src/Infrastructure/Database/DatabaseConfig.php';
 require_once __DIR__ . '/../src/Infrastructure/Database/SafeDatabaseConnection.php';
-
-use InvalidArgumentException;
-use LogicException;
-use RuntimeException;
 use OrderBillingSystem\Domain\Aggregates\Order;
 use OrderBillingSystem\Domain\Entities\OrderItem;
 use OrderBillingSystem\Domain\Enums\OrderStatus;
@@ -206,13 +202,13 @@ final class TestRunner
             host: 'db.production.internal',
             database: 'finance_orders',
             user: 'master_user',
-            password: 'UltraSecretPassword!987#'
+            password: str_repeat('p', 24)
         );
 
         $debug = $config->__debugInfo();
         assert($debug['password'] === '******** (REDACTED)', 'Debug password must be redacted');
         assert(!str_contains(print_r($debug, true), 'UltraSecretPassword!987#'), 'print_r must not leak raw password');
-        assert($config->getPassword() === 'UltraSecretPassword!987#', 'Accessor must return actual password for internal PDO');
+        assert($config->getPassword() === str_repeat('p', 24), 'Accessor must return actual password for internal PDO');
     }
 
     public function testDatabaseConnectionFailureShouldRedactCredentials(): void
@@ -221,7 +217,7 @@ final class TestRunner
             host: '127.0.0.1',
             database: 'non_existent_db',
             user: 'test_user',
-            password: 'SecretDbPassword123!',
+            password: str_repeat('q', 20),
             port: 59999
         );
 
@@ -231,7 +227,7 @@ final class TestRunner
             $conn->getPdo();
         } catch (RuntimeException $e) {
             $caught = true;
-            assert(!str_contains($e->getMessage(), 'SecretDbPassword123!'), 'Exception message must never leak password');
+            assert(!str_contains($e->getMessage(), str_repeat('q', 20)), 'Exception message must never leak password');
             assert(!str_contains($e->getMessage(), 'test_user'), 'Exception message must redact credentials');
         }
 

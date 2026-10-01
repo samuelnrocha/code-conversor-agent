@@ -6,5 +6,7 @@
 *.secret
 *.key
 *.pem
+# Keep the sanitized template trackable; never add populated environment files.
+!.env.example
 appsettings.Development.json
 appsettings.Production.json
