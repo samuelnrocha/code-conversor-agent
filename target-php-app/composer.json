@@ -6,7 +6,8 @@
   "require": {
     "php": ">=8.4.0",
     "ext-bcmath": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-pdo": "*"
   },
   "autoload": {
     "psr-4": {
@@ -17,5 +18,9 @@
     "psr-4": {
       "OrderBillingSystem\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "test": "php -d assert.exception=1 tests/OrderAggregateTest.php",
+    "lint": "find src bin tests -name '*.php' -print0 | xargs -0 -n1 php -l"
   }
 }
