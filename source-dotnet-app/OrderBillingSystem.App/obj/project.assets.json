@@ -1,0 +1,94 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "OrderBillingSystem.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/OrderBillingSystem.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OrderBillingSystem.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "OrderBillingSystem.Core/1.0.0": {
+      "type": "project",
+      "path": "../OrderBillingSystem.Core/OrderBillingSystem.Core.csproj",
+      "msbuildProject": "../OrderBillingSystem.Core/OrderBillingSystem.Core.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "OrderBillingSystem.Core >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/samuel/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.App/OrderBillingSystem.App.csproj",
+      "projectName": "OrderBillingSystem.App",
+      "projectPath": "/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.App/OrderBillingSystem.App.csproj",
+      "packagesPath": "/home/samuel/.nuget/packages/",
+      "outputPath": "/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.App/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/samuel/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/OrderBillingSystem.Core.csproj": {
+              "projectPath": "/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/OrderBillingSystem.Core.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/home/samuel/.dotnet/sdk/8.0.425/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

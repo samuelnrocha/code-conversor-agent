@@ -1,0 +1,11 @@
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/bin/Debug/net8.0/OrderBillingSystem.Core.deps.json
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/bin/Debug/net8.0/OrderBillingSystem.Core.dll
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/bin/Debug/net8.0/OrderBillingSystem.Core.pdb
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/OrderBillingSystem.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/OrderBillingSystem.Core.AssemblyInfoInputs.cache
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/OrderBillingSystem.Core.AssemblyInfo.cs
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/OrderBillingSystem.Core.csproj.CoreCompileInputs.cache
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/OrderBillingSystem.Core.dll
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/refint/OrderBillingSystem.Core.dll
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/OrderBillingSystem.Core.pdb
+/home/samuel/code-conversor-agent/source-dotnet-app/OrderBillingSystem.Core/obj/Debug/net8.0/ref/OrderBillingSystem.Core.dll

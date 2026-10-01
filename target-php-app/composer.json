@@ -1,0 +1,21 @@
+{
+  "name": "conversor/order-billing-system-php",
+  "description": "Migrated Order & Billing Processing System in modern PHP 8.4",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.4.0",
+    "ext-bcmath": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "OrderBillingSystem\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OrderBillingSystem\\Tests\\": "tests/"
+    }
+  }
+}

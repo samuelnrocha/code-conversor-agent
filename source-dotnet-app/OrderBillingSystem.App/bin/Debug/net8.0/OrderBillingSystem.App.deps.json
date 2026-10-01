@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "OrderBillingSystem.App/1.0.0": {
+        "dependencies": {
+          "OrderBillingSystem.Core": "1.0.0"
+        },
+        "runtime": {
+          "OrderBillingSystem.App.dll": {}
+        }
+      },
+      "OrderBillingSystem.Core/1.0.0": {
+        "runtime": {
+          "OrderBillingSystem.Core.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "OrderBillingSystem.App/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "OrderBillingSystem.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

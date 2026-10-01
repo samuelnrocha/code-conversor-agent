@@ -1,0 +1,10 @@
+
+# Security: Secrets & Environment Credentials
+.env
+.env.local
+.env.*.local
+*.secret
+*.key
+*.pem
+appsettings.Development.json
+appsettings.Production.json
